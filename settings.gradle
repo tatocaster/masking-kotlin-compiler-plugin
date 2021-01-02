@@ -1,0 +1,5 @@
+rootProject.name = "MaskingKotlinCompilerPlugin"
+include "masking-compiler-plugin"
+include "masking-gradle-plugin"
+include "masking-compiler-plugin-annotation"
+include "sample"

@@ -1,0 +1,21 @@
+apply plugin: "application"
+apply plugin: "org.jetbrains.kotlin.jvm"
+apply plugin: "kotlin-kapt"
+apply plugin: "me.tatocaster.masking.gradle.plugin"
+
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$ktVersion"
+}
+
+application {
+    mainClassName = "me.tatocaster.masking.sample.MainKt"
+}
+
+
+// enable the plugin
+maskingGradlePlugin {
+    enabled = true
+    mask = "*"
+//    maskingAnnotation = "me.tatocaster.masking.sample.CustomMasking"
+}

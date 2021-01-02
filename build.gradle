@@ -1,0 +1,36 @@
+buildscript {
+    ext.ktVersion = "1.4.21"
+    ext.maskingVersion = "0.5.0"
+    repositories {
+        jcenter()
+        google()
+        mavenCentral()
+        flatDir {
+            dirs "masking-gradle-plugin/build/libs"
+        }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$ktVersion"
+        classpath "me.tatocaster.masking:masking-gradle-plugin:$maskingVersion"
+    }
+}
+
+
+subprojects {
+    repositories { jcenter() }
+
+    configurations.configureEach {
+        resolutionStrategy {
+            dependencySubstitution {
+                // substitute with the local project because Kotlin compiler will try to fetch it from remote
+                substitute module('me.tatocaster.masking:masking-compiler-plugin') with project(':masking-compiler-plugin')
+                substitute module('me.tatocaster.masking:masking-compiler-plugin-annotation') with project(':masking-compiler-plugin-annotation')
+            }
+        }
+    }
+
+    // Install into local Maven repo with `./gradlew :kotlin-plugin:install :gradle-plugin:install`
+    apply plugin: "maven"
+    group = "me.tatocaster.masking"
+    version = "$maskingVersion"
+}
